@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Recommendation</title>
+    <!-- Thêm thư viện Bootstrap để sử dụng các thành phần và hiệu ứng CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Thêm một số thuộc tính CSS để tùy biến giao diện -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333333;
+            text-align: center;
+        }
+        form {
+            padding: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+        label {
+            display: inline-block;
+            width: 30%;
+            font-weight: bold;
+        }
+        input {
+            display: inline-block;
+            width: 60%;
+        }
+        input[type=submit] {
+            width: 100%;
+            margin-top: 10px;
+            background-color: #333333;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+        }
+        input[type=submit]:hover {
+            background-color: #666666;
+            cursor: pointer;
+        }
+        .result-container {
+            padding: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 10px;
+            background-color: #ffffff;
+            height: 300px; /* Chiều cao cố định cho khối chứa danh sách trò chơi */
+            overflow-y: auto; /* Tạo thanh cuộn chỉ ở chiều dọc */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 10px;
+        }
+        .a{
+            padding: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hệ thống đề xuất trò chơi</h1>
+    </header>
+    <main class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form action="/recommend_games" method="POST">
+                      <div class="form-group">
+                <label for="user_reviews">Số lượng đánh giá của người dùng:</label>
+                <input type="number" id="user_reviews" name="user_reviews" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="price_final">Giá cả:</label>
+                <input type="number" id="price_final" name="price_final" step="0.01" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="positive_ratio">Đánh giá tích cực(%):</label>
+                <input type="number" id="positive_ratio" name="positive_ratio" step="0.01" required class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="discount">Giảm giá:</label>
+                <input type="number" id="discount" name="discount" step="0.01" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="year_release">Năm phát hành:</label>
+                <input type="number" id="year_release" name="year_release" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="platform">Số lượng nền tảng:</label>
+                <input type="number" id="platform" name="platform" class="form-control" >
+            </div>
+                    <input type="submit" value="Recommend Games" class="btn">
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="a">
+                    <h1>Các game được đề xuất dựa trên các tiêu chí</h1>
+                    <!-- Hiển thị kết quả dự đoán -->
+                <div class="result-container">
+
+                    <h2>Danh sách các game được đề xuất cho bạn:</h2>
+                    <ul>
+                        <!-- Thay đổi chiều cao hoặc thêm nhiều mục vào danh sách để thấy thanh cuộn -->
+                        {% for game in recommended_games %}
+                            <li>{{ game }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                </div>
+            </div>
+        </div>
+    <p>Kết quả dự đoán của mô hình: {{ recommendation }}</p>
+    </main>
+</body>
+</html>
